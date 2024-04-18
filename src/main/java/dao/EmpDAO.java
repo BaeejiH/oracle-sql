@@ -15,11 +15,8 @@ public class EmpDAO {
 		ArrayList<HashMap<String,Object>> list = new ArrayList<>();
 		
 		Connection conn = DBHelper.getConnection();
-		String sql = "select"
-				+"emp.empno empNo, emp.ename ename, emp.deptno,"
-				+"dept.dname dname"
-				+"From emp INNER JOIN dept"
-				+"ON emp.deptno,dept.deptno";
+		String sql = "select emp.empno empNo, emp.ename ename, emp.deptno deptNo,dept.dname dname From emp INNER JOIN dept ON emp.deptno = dept.deptno";
+			
 		
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();

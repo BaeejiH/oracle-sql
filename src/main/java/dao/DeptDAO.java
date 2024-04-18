@@ -15,16 +15,21 @@ public class DeptDAO {
 		
 		Connection conn = DBHelper.getConnection();
 		String sql = "SELECT"
-				+ " deptno deptNo, dname, loc"
+				+ " deptno deptNo, dname, loc,'ON' onoff"
 				+ " FROM dept";
-		PreparedStatement stmt = conn.prepareStatement("");
+		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String,Object> m = new HashMap<>();
 			m.put("deptNo", rs.getInt("deptNo"));
-			m.put("dname", rs.getInt("dname"));
-			m.put("loc", rs.getInt("loc"));
-			m.put("onoff", rs.getInt("onoff"));
+			m.put("dname", rs.getString("dname"));
+			m.put("loc", rs.getString("loc"));
+			m.put("onoff", rs.getString("onoff"));
+			
+			
+			System.out.println("dname: " + m.get("dname"));
+
+			
 			list.add(m);
 		}
 		return list;
@@ -41,7 +46,7 @@ public class DeptDAO {
 		String sql = "SELECT"
 				+ " deptno deptNo, dname, loc"
 				+ " FROM dept";
-		PreparedStatement stmt = conn.prepareStatement("");
+		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			Dept d = new Dept();

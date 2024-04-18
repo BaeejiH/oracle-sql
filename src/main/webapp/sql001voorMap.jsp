@@ -25,8 +25,8 @@
 <body>
 
 <h1>Dept List</h1>
-<table>
-	<tr border="1">
+<table border="1">
+	<tr >
 		<td>deptNo</td>
 		<td>dName</td>
 		<td>loc</td>
@@ -50,8 +50,8 @@
 </table>
 
 <h1>Emp List</h1>
-<table>
-	<tr border="1">
+<table border="1">
+	<tr >
 		<td>empNo</td>
 		<td>eName</td>
 		<td>sal</td>
@@ -76,8 +76,8 @@
 
 
 <h1>Dept + onoffList</h1>
-<table>
-	<tr border="1">
+<table border="1">
+	<tr >
 		<td>deptNo</td>
 		<td>dName</td>
 		<td>loc</td>
@@ -90,7 +90,7 @@
 	
 	<tr>
 		<td><%=(Integer)(don.get("deptNo"))%></td>
-		<td><%=(String)(don.get("dName"))%></td>
+		<td><%=(String)(don.get("dname"))%></td>
 		<td><%=(String)(don.get("loc"))%></td>
 		<td><%=(String)(don.get("onoff"))%></td>
 	</tr>	
@@ -104,8 +104,8 @@
 
 
 <h1>Emp INNER JOIN Dept List</h1>
-<table>
-	<tr border="1">
+<table border="1">
+	<tr>
 		<td>empNo</td>
 		<td>ename</td>
 		<td>deptNo</td>
