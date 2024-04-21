@@ -1,9 +1,8 @@
-package vo;
+package vo; 
 
-//Vo(vlaue Object) > DTO(Data Transfer Object) , Domain(속성 값의 범위 , 테이블 속성의 범위)
+// VO(Value Object) > DTO(Data Transfer Object) , Domain
 
 public class Dept {
-	
 	private int deptNo;
 	private String dname;
 	private String loc;
@@ -28,3 +27,4 @@ public class Dept {
 	}
 	
 }
+

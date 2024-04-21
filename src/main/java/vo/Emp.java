@@ -3,13 +3,12 @@ package vo;
 public class Emp {
 	private int empNo;
 	private String ename;
-	private  String job;
-	private  int mgr;
-	private  String hiredate;
-	private  double sal;
-	private  double comm;
-	private  int deptno;
-	
+	private String job;
+	private int mgr;
+	private String hiredate;
+	private double sal;
+	private double comm;
+	private int deptno;
 	
 	public int getEmpNo() {
 		return empNo;

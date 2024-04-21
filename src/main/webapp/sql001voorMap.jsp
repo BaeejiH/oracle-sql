@@ -37,9 +37,9 @@
 	%>		
 	
 	<tr>
-		<td><%=d.deptNo %></td>
-		<td><%=d.dname%></td>
-		<td><%=d.loc%></td>
+		<td><%=d.getDeptNo()%></td>
+		<td><%=d.getDname()%></td>
+		<td><%=d.getLoc()%></td>
 	</tr>	
 			
 			
@@ -62,9 +62,9 @@
 	%>		
 	
 	<tr>
-		<td><%=e.empNo%></td>
-		<td><%=e.ename%></td>
-		<td><%=e.sal%></td>
+		<td><%=e.getEmpNo()%></td>
+		<td><%=e.getEname()%></td>
+		<td><%=e.getSal()%></td>
 	</tr>	
 			
 			

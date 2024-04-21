@@ -13,7 +13,7 @@ public class DBHelper {
 		String dbUrl = "jdbc:oracle:thin:@//localhost:1521/orcl";
 		String dbUser = "admin";
 		// 보안이슈로 로컬에서 설정파일 로드(소스코드에서 비밀번호 노출 X )
-		FileReader fr = new FileReader("D:\\dev\\auth\\oracle.properties");
+		FileReader fr = new FileReader("c:\\auth\\oracle.properties");
 		Properties prop = new Properties();
 		prop.load(fr);
 		
