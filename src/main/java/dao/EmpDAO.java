@@ -9,6 +9,104 @@ import java.util.HashMap;
 import vo.Emp;
 
 public class EmpDAO {
+	public static ArrayList<HashMap<String,String>> selectJOBCASEtList() throws Exception {
+	    ArrayList<HashMap<String, String>> Caselist = new ArrayList<>();
+	    
+	    Connection conn = DBHelper.getConnection();
+	    
+	    String sql = "SELECT ename,\r\n"
+	    		+ "       CASE\r\n"
+	    		+ "           WHEN job = 'PRESIDENT' THEN '빨강'\r\n"
+	    		+ "           WHEN job = 'MANAGER' THEN '주황'\r\n"
+	    		+ "           WHEN job = 'ANALYST' THEN '노랑'\r\n"
+	    		+ "           WHEN job = 'CLERK' THEN '초록'\r\n"
+	    		+ "           ELSE '파랑'\r\n"
+	    		+ "       END AS color\r\n"
+	    		+ "FROM emp\r\n"
+	    		+ "ORDER BY (CASE \r\n"
+	    		+ "              WHEN job = 'PRESIDENT' THEN 1\r\n"
+	    		+ "              WHEN job = 'MANAGER' THEN 2\r\n"
+	    		+ "              WHEN job = 'ANALYST' THEN 3\r\n"
+	    		+ "              WHEN job = 'CLERK' THEN 4\r\n"
+	    		+ "              ELSE 5\r\n"
+	    		+ "          END) ASC";
+
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    ResultSet rs = stmt.executeQuery();
+	    
+	    // 쿼리 결과를 처리하여 Caselist에 추가
+	    while (rs.next()) {
+	        HashMap<String, String> map = new HashMap<>();
+	        map.put("ename", rs.getString("ename"));
+	        map.put("color", rs.getString("color"));
+	        Caselist.add(map);
+	    }
+	    
+	    // 연결을 닫음
+	    conn.close();
+	    
+	    return Caselist;
+		}
+	
+	
+
+
+	
+
+	//DEPTNO 뒤에 부서별 인원 같이 조회하는 메서드
+	public static ArrayList<HashMap<String, Integer>> selectDeptNoCntList() throws Exception {
+	    ArrayList<HashMap<String, Integer>> list = new ArrayList<>();
+	    
+	    Connection conn = DBHelper.getConnection();
+	    
+	    String sql = "SELECT deptno deptNo, COUNT(*) cnt" 
+	            + " FROM emp"
+	            + " WHERE deptno IS NOT NULL"
+	            + " GROUP BY deptno"
+	            + " ORDER BY deptno ASC";
+
+	    PreparedStatement stmt = conn.prepareStatement(sql);
+	    ResultSet rs = stmt.executeQuery();
+	    
+	    while (rs.next()) {
+	        HashMap<String, Integer> m = new HashMap<>();
+	        m.put("cnt", rs.getInt("cnt"));
+	        m.put("deptNo", rs.getInt("deptNo")); 
+	        list.add(m);
+	    }
+	    
+	    return list;
+	}
+
+	
+	
+	
+	
+	//DEPTNO 목록을 출력하는 메서드
+	public static ArrayList<Integer> selectDeptnoList() throws Exception{
+		ArrayList<Integer> list = new ArrayList<>();
+		
+		Connection conn = DBHelper.getConnection();
+		
+		String sql = "select distinct deptno deptNo from emp where deptno is not null order by deptno asc";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			Integer i = rs.getInt("deptNo"); //  랩퍼타입과 기본타입 간에 Auto Boxing
+			list.add(i);
+		}
+		
+		
+		
+		conn.close();
+		
+		return list;
+				
+	}
+	
+	
+	
 	//조인으로 Map을 사용하는 경우
 	public static ArrayList<HashMap<String,Object>> selectEmpAndDeptList()
 	throws Exception{
