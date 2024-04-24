@@ -10,6 +10,39 @@ import java.util.HashMap;
 import vo.Emp;
 
 public class EmpDAO {
+	//sql001orderby.jsp
+	public static ArrayList<Emp>selectEmpListSort(String col,String sort)throws Exception{
+		//매개값 디버깅
+		System.out.println(col+"<---EmpDAO.selectEmpListSort param col");
+		System.out.println(sort+"<---EmpDAO.selectEmpListSort param Sort");
+		
+		ArrayList<Emp> list = new ArrayList<>();
+		Connection conn = DBHelper.getConnection();
+		
+		String sql= "select empno,ename"
+				+ " from emp";
+		
+		
+		if(col !=null && sort != null) {
+			sql= sql + "order by "+col+" "+sort;
+		}
+		 
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		System.out.println(stmt);
+		
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			Emp e = new Emp();
+			e.setEmpNo(rs.getInt("empno"));
+			e.setEname(rs.getString("ename"));
+			list.add(e);
+		}
+		 	 
+		 conn.close();
+		 return list;
+	}
+	
+	
 	public static ArrayList<Emp> selectEMPListByGrade
 			(ArrayList<Integer>ckList) throws Exception{
 		ArrayList<Emp> list = new ArrayList<>();
@@ -60,7 +93,7 @@ public class EmpDAO {
 				  e.setGrade(rs.getInt("grade"));
 				  list.add(e);
 			  }
-			  	
+		conn.close();  	
 		return list;
 	}
 
