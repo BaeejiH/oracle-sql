@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,80 @@ import java.util.HashMap;
 import vo.Emp;
 
 public class EmpDAO {
+	//sql001selfjoin.jsp
+	//관리자 등급 표시
+	//NVL : null일때 다른 값으로 표시
+	// ON e1.mgr = e2.empno : e1의 관리자와 e2의 직원번호가 일치하는경우 출력
+	public static  ArrayList<HashMap<String,Object>>selectEmpmgr( ) throws Exception {
+		  ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+		  Connection conn = DBHelper.getConnection();
+	
+		  String sql = "SELECT e1.empno, e1.ename, e1.grade, NVL(e2.ename, '관리자없음') \"mgrName\", NVL(e2.grade, 0) \"mgrGrade\" "
+		  		+ "FROM emp e1 LEFT OUTER JOIN emp e2 "
+		  		+ "ON e1.mgr = e2.empno "
+		  		+ "ORDER BY e1.empno ASC";
+		  System.out.println("SQL: " + sql);	
+		  		  
+		  PreparedStatement stmt = conn.prepareStatement(sql);
+		  ResultSet rs = stmt.executeQuery();
+		    
+		
+		    while (rs.next()) {
+		        HashMap<String, Object> map = new HashMap<>();
+		        map.put("empno", rs.getInt("empno"));
+		        map.put("ename", rs.getString("ename"));
+		        map.put("grade", rs.getInt("grade"));
+		        map.put("mgrName", rs.getString("mgrName"));
+		        map.put("mgrGrade", rs.getInt("mgrGrade"));
+		  
+		        list.add(map);
+						 	
+		   }
+		    conn.close();
+			return list;		  
+	}	    
+	
+	
+	
+	
+	//타입 : ArrayList
+	public static  ArrayList<HashMap<String,Integer>>selectEmpSalState( ) throws Exception {
+		  ArrayList<HashMap<String, Integer>> list = new ArrayList<>();
+		  Connection conn = DBHelper.getConnection();
+		String sql  = "SELECT"
+				+ " grade"
+				+ ", COUNT(*) count"
+				+ ", SUM(sal) sum"
+				+ ", AVG(sal) avg"
+				+ ", MAX(sal) max"
+				+ ", MIN(sal) min"
+				+ " FROM emp"
+				+ " GROUP BY grade"
+				+ " ORDER BY grade ASC";
+					
+		 PreparedStatement stmt = conn.prepareStatement(sql);
+	    ResultSet rs = stmt.executeQuery();
+	    
+	    // 쿼리 결과를 처리하여 Caselist에 추가
+	    while (rs.next()) {
+	        HashMap<String, Integer> map = new HashMap<>();
+	        map.put("grade", rs.getInt("grade"));
+	        map.put("count", rs.getInt("count"));
+	        map.put("sum", rs.getInt("sum"));
+	        map.put("avg", rs.getInt("avg"));
+	        map.put("max", rs.getInt("max"));
+	        map.put("min", rs.getInt("min"));
+	        list.add(map);
+				
+		conn.close();
+		
+		
+	}
+		return list;
+	    
+}
+	
+	
 	//sql001orderby.jsp
 	public static ArrayList<Emp>selectEmpListSort(String col,String sort)throws Exception{
 		//매개값 디버깅
